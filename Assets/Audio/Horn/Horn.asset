@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a135d3f36e108b94db40066251264caf, type: 3}
   m_Name: Horn
   m_EditorClassIdentifier: 
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: 6631a061eac41c942869b2b3075152ee, type: 3}
+  - {fileID: 8300000, guid: 95e93bf8351c92b40bad1520bab143fa, type: 3}
+  - {fileID: 8300000, guid: 8d2087251c9355946b2011845dd01e13, type: 3}
+  volume:
+    minValue: 0
+    maxValue: 0
