@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e9af8dd48795444486b46eb26e96d35, type: 3}
-  m_Name: Recipe1
+  m_Script: {fileID: 11500000, guid: a135d3f36e108b94db40066251264caf, type: 3}
+  m_Name: New Simple Audio Event
   m_EditorClassIdentifier: 
-  potionResult:
-    name: 
-    amount: 1
-    unit: 0
-  potionIngredients: []
+  audioClips: []
+  volume:
+    minValue: 0
+    maxValue: 0
+  pitch:
+    minValue: 0
+    maxValue: 0

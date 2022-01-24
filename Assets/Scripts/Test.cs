@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MyGame;
 
 public class Test : MonoBehaviour
 {
-    public Recipe ingredient;
-    [Space(20)]
-    public Recipe[] ingrArray;
 
+    public SimpleAudioEvent simpleAudioEvent;
     void OnPlay() {
         Debug.Log("Play");
         
@@ -16,5 +13,7 @@ public class Test : MonoBehaviour
 
     void OnUse() {
         Debug.Log("Use");
+        var audioSource = GetComponent<AudioSource>();
+        simpleAudioEvent.Play(audioSource);
     }
 }
