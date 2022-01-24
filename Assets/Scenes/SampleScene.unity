@@ -392,10 +392,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   potionResult:
-    name: 
+    name: Piece of luck
     amount: 1
-    unit: 0
+    unit: 3
   potionIngredients:
-  - name: 
-    amount: 0
-    unit: 0
+  - name: sugar
+    amount: 2
+    unit: 1
+  - name: solt
+    amount: 3
+    unit: 1

@@ -11,6 +11,7 @@ public class Test : MonoBehaviour
 
     void OnPlay() {
         Debug.Log("Play");
+        
     }
 
     void OnUse() {

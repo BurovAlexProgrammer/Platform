@@ -12,8 +12,13 @@ namespace MyGame {
         public IngredientUnit unit;
     }
 
-    public class Recipe : MonoBehaviour {
+    [CreateAssetMenu(menuName = "Custom/Temp/Recipe")]
+    public class Recipe : RecipeSO {
         public Ingredient potionResult;
         public Ingredient[] potionIngredients;
+    }
+
+    public abstract class RecipeSO : ScriptableObject {
+        
     }
 }
