@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a135d3f36e108b94db40066251264caf, type: 3}
+  m_Name: Horn
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: 6631a061eac41c942869b2b3075152ee, type: 3}
+  - {fileID: 8300000, guid: 95e93bf8351c92b40bad1520bab143fa, type: 3}
+  - {fileID: 8300000, guid: 8d2087251c9355946b2011845dd01e13, type: 3}
+  volume:
+    minValue: 0.69518715
+    maxValue: 1
+  pitch:
+    minValue: 1.016043
+    maxValue: 1.283423
