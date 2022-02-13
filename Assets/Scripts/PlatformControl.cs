@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +16,20 @@ public class PlatformControl : MonoBehaviour {
     private Vector2 inputMove;
     private float targetX = 0;
     private float platformX;
+    private bool wait = true;
+    private float startDelay = 0.3f;
+
+    async void WaitOnStart() {
+        while (startDelay > 0f) {
+            await Task.Yield();
+            startDelay -= Time.deltaTime;
+        }
+        wait = false;
+    }
+
+    public void Start() {
+        WaitOnStart();
+    }
 
     public void OnMove(InputAction.CallbackContext context) {
         inputMove = context.ReadValue<Vector2>();
@@ -30,11 +43,11 @@ public class PlatformControl : MonoBehaviour {
     }
 
     public void MovePlatform() {
-        var newX = Mathf.Lerp(platformX, targetX, 1f);
-        platform.transform.position = Vector3.MoveTowards(platform.transform.position, new Vector3(targetX,0), 0.3f);
+        platform.transform.position = Vector3.MoveTowards(platform.transform.position, new Vector3(targetX, 0), speed);
     }
 
     private void Update() {
+        if (wait) return;
         platformX = platform.transform.position.x;
         MoveTarget();
         MovePlatform();
