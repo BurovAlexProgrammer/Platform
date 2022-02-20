@@ -26,7 +26,7 @@ namespace Global {
     public static class Extensions {
         public static void CheckExisting(this object T) {
             if (T is null)
-                throw new Exception($"{T.GetType()?.Name}");
+                throw new Exception($"{T.GetType()?.Name} is null.");
         }
     }
 

@@ -1,7 +1,6 @@
-using UnityEngine;
-using System.Collections;
-using UnityEditor;
 using Global;
+using UnityEditor;
+using UnityEngine;
 
 [CustomPropertyDrawer(typeof(RangedFloat), true)]
 public class RangedFloatDrawer : PropertyDrawer {

@@ -1,38 +1,71 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using System.IO;
 using UnityEngine;
 using Global;
+using UnityEditor;
 
 [ExecuteAlways]
 public class GameSettingsStore : MonoBehaviour
 {
-    public GameSettings defaultGameSettings;
+    private readonly GameSettings _defaultGameSettings = new GameSettings
+    {
+        state = "default",
+        showDebugInfo = false
+    };
+
     public GameSettings currentGameSettings;
-    public GameSettings savedGameSettings;
+    private GameSettings _savedGameSettings = new GameSettings();
 
-    private void Awake() {
-        savedGameSettings ??= ScriptableObject.CreateInstance<GameSettings>();
-        if (!File.Exists(GameData.savedSettingsPath)) {
-            Debug.LogWarning("Saved settings file doesn't exist. Creating new from default settings");
-            if (!defaultGameSettings)
-                throw new System.Exception("defaultGameSettings is null");
-            CreateSettingsFile();
-            savedGameSettings = defaultGameSettings;
+    private void Start()
+    {
+        Debug.Log("GameSettingsStore Start..");
+        LoadSettings();
+        if (Application.isPlaying)
+        {
+            DontDestroyOnLoad(gameObject);
         }
-        JsonUtility.FromJsonOverwrite(File.ReadAllText(GameData.savedSettingsPath), savedGameSettings);
-        if (!savedGameSettings) {
-            Debug.LogError("Settings file was broken. Creating file from default settings.");
-            CreateSettingsFile();
-            savedGameSettings = defaultGameSettings;
-        }
-        currentGameSettings = savedGameSettings;
-
-        DontDestroyOnLoad(gameObject);
     }
 
-    void CreateSettingsFile() {
-        File.WriteAllText(GameData.savedSettingsPath, JsonUtility.ToJson(defaultGameSettings));
+    public void LoadSettings()
+    {
+        if (File.Exists(GameData.savedSettingsPath))
+        {
+            JsonUtility.FromJsonOverwrite(File.ReadAllText(GameData.savedSettingsPath), _savedGameSettings);
+        }
+        else
+        {
+            Debug.LogWarning("Saved settings file doesn't exist. Creating new from default settings");
+            CreateSettingsFile();
+            _savedGameSettings = _defaultGameSettings;
+        }
+
+        currentGameSettings = _savedGameSettings.Clone();
+    }
+
+    public void ResetSettings()
+    {
+        currentGameSettings = _defaultGameSettings.Clone();
+    }
+
+    private void CreateSettingsFile()
+    {
+        var settingsFolder = Path.GetDirectoryName(GameData.savedSettingsPath);
+        if (settingsFolder is null) throw new Exception("SettingsFolder cannot be null.");
+        if (!Directory.Exists(settingsFolder))
+        {
+            Directory.CreateDirectory(settingsFolder);
+            Debug.Log("Settings folder has been created.");
+        }
+
+        SaveSettings();
         Debug.Log("Settings file has been created.");
+    }
+
+    public void SaveSettings()
+    {
+        File.WriteAllText(GameData.savedSettingsPath, JsonUtility.ToJson(currentGameSettings));
+        _savedGameSettings = currentGameSettings.Clone();
+        Debug.Log("Settings file has been saved." + Environment.NewLine +
+                  "Game settings: " + JsonUtility.ToJson(_savedGameSettings));
     }
 }
