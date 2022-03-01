@@ -35,14 +35,14 @@ public class PlatformControl : MonoBehaviour {
         inputMove = context.ReadValue<Vector2>();
     }
 
-    public void MoveTarget() {
+    private void MoveTarget() {
         if (inputMove.sqrMagnitude < 0.01f)
             return;
         targetX += inputMove.x * Time.deltaTime * sensetivity;
         targetX = Mathf.Clamp(targetX, -range, range);
     }
 
-    public void MovePlatform() {
+    private void MovePlatform() {
         platform.transform.position = Vector3.MoveTowards(platform.transform.position, new Vector3(targetX, 0), speed);
     }
 
