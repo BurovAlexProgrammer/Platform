@@ -8,9 +8,11 @@ namespace Common.Editor
     [InitializeOnLoad]
     public class AutoSave
     {
+        private static bool IsSaveByTimeout = true;
         static AutoSave()
         {
             EditorApplication.playModeStateChanged += SaveOnPlay;
+            SaveByTimeout();
         }
 
         private static void SaveOnPlay(PlayModeStateChange state)
@@ -19,11 +21,11 @@ namespace Common.Editor
                 Save();
         }
 
-        private async void SaveByTimeout()
+        private static async void SaveByTimeout()
         {
             var timer = 0f;
             var timeout = 5 * 60;
-            while (true)
+            while (IsSaveByTimeout)
             {
                 if (timer >= timeout)
                 {
