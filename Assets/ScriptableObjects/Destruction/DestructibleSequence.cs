@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -14,13 +13,14 @@ namespace ScriptableObjects.Destruction
         [SerializeField] public float initHealth = 100f;
         [SerializeField] public AudioEvent damageSound;
         [SerializeField] public GameObject damageEffect;
+        [SerializeField] public GameObject destroyedPrefab;
         private float _health;
         private int _stateCount;
         private GameObject _currentState;
         private int _currentStateNumber;
         [UsedImplicitly] public float Health => _health;
         [UsedImplicitly] public GameObject CurrentState => _currentState;
-        [UsedImplicitly] public bool MustBeDestroyed => Mathf.Approximately(GetHealth(), 0f);
+        [UsedImplicitly] public bool MustBeDestroyed => GetHealth() <= 0f;
 
         private void OnEnable()
         {
@@ -37,6 +37,7 @@ namespace ScriptableObjects.Destruction
 
         public override void MakeDamage(float damage)
         {
+            if (MustBeDestroyed) return;
             _health -= damage;
             OnMakeDamage();
             //TODO play sound
@@ -48,15 +49,17 @@ namespace ScriptableObjects.Destruction
             var newStateNumber =
                 Mathf.FloorToInt(
                     // 45/100 0.45 = 2-nd state     0.51 = still 1-st state   1/0.51 = 1.96 => 1
-                    1f / (_health / initHealth));
+                    1f / (_health / initHealth)) - 1;
             if (newStateNumber != _currentStateNumber)
             {
+                _currentStateNumber = newStateNumber;
                 OnStateChanged();
             }
         }
 
         void OnStateChanged()
         {
+            if (MustBeDestroyed) return;
             _currentState = statePrefabs[_currentStateNumber];
         }
 
@@ -65,7 +68,5 @@ namespace ScriptableObjects.Destruction
         /// </summary>
         [UsedImplicitly]
         public float GetHealth() => _health / initHealth;
-
-
     }
 }

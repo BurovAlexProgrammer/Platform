@@ -9,7 +9,9 @@ namespace Bricks
         private const string BrickSequenceName = "Brick Sequence";
         [SerializeField] private DestructibleSequence destructibleSequence;
         private GameObject _brickSequence;
-        [SerializeField] private float health;
+
+        //Temp data
+        private float health;
         private bool mustBeDestroyed;
 
         private void Start()
@@ -26,7 +28,8 @@ namespace Bricks
             _brickSequence = transform.Find(BrickSequenceName)?.gameObject;
             if (_brickSequence == null)
             {
-                _brickSequence = new GameObject {name = BrickSequenceName};
+                _brickSequence = new GameObject();
+                _brickSequence.name = BrickSequenceName;
                 _brickSequence.transform.SetParent(transform);
                 _brickSequence.transform.localPosition = Vector3.zero;
                 _brickSequence.transform.localScale = Vector3.one;
@@ -46,7 +49,20 @@ namespace Bricks
             destructibleSequence.MakeDamage(damage);
             if (destructibleSequence.MustBeDestroyed)
             {
+                //_brickSequence.gameObject.SetActive(false);
+                Instantiate(destructibleSequence.destroyedPrefab,
+                    transform.position, transform.rotation, transform.parent);
                 Destroy(gameObject);
+            }
+            else
+            {
+                //If current state prefab changed
+                if (!ReferenceEquals(_brickSequence.transform.GetChild(0).gameObject,
+                    destructibleSequence.CurrentState))
+                {
+                    _brickSequence = destructibleSequence.CurrentState;
+                    RefreshSequence();
+                }
             }
         }
     }

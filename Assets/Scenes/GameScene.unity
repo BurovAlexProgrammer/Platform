@@ -1416,6 +1416,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick Sequence
       objectReference: {fileID: 0}
+    - target: {fileID: 8546167956891380317, guid: 725188136c805904e80a0dab59b4ffb1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 725188136c805904e80a0dab59b4ffb1, type: 3}
 --- !u!1 &1159784605

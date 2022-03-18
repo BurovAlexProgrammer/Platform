@@ -43,7 +43,7 @@ public static class Extensions
         newGameObject.transform.name = T.transform.name;
         newGameObject.transform.tag = T.transform.tag;
         newGameObject.layer = T.layer;
-        Object.DestroyImmediate(T);
+        Object.Destroy(T);
     }
 
     public static bool CompareTagWithParents(this Transform T, string tag)
