@@ -27,10 +27,10 @@ public static class GameData {
 
 public static class Extensions
 {
-    public static void CheckExisting(this object T)
+    public static void CheckExisting<T>(this GameObject gameObject) where  T : Component
     {
-        if (T is null)
-            throw new Exception($"{T.GetType()?.Name} is null.");
+        if (!gameObject.IsComponentExist<T>())
+            throw new Exception($"{typeof(T).Name} is null.");
     }
 
     public static void Replace(this GameObject T, GameObject prefab)
@@ -46,6 +46,15 @@ public static class Extensions
         Object.Destroy(T);
     }
 
+    public static bool IsComponentExist<T>(this GameObject gameObject) where T : Object
+    {
+        return gameObject.TryGetComponent(out T component);
+    } 
+    public static bool IsComponentExist<T>(this Collider gameObject) where T : Object
+    {
+        return gameObject.TryGetComponent(out T component);
+    } 
+    
     public static bool CompareTagWithParents(this Transform T, string tag)
     {
         var parent = T.parent;

@@ -7,7 +7,7 @@ namespace GameManagement
         public GameSettingsStore gameSettingsStore;
 
         private void Awake() {
-            gameSettingsStore.CheckExisting();
+            gameObject.CheckExisting<GameSettingsStore>();
         }
     }
 }
