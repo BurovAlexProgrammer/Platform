@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Common.Editor
 {
@@ -40,7 +41,7 @@ namespace Common.Editor
 
         private static void Save()
         {
-            EditorSceneManager.SaveOpenScenes();
+            EditorSceneManager.SaveScene(SceneManager.GetSceneAt(0));
             AssetDatabase.SaveAssets();
             Debug.Log("Auto-saving done.");
         }
